@@ -136,11 +136,18 @@ It seems like we have two groups of individuals. One group represents the part t
 * The part time employees have a much wider range in salary, with salaries starting at near 0 to 300k. 
 
 
-Next, we will clean up the JobTitle variable 
+Next, we will clean up the JobTitle variable. The Job Title category has quite a few issues
+* The job category is not standardized. Some jobs come with abbreviations and some have the fully title (Assist. vs Assistant)
+* Some job titles are plainly misspelled. 
 
 
-
-
+```{r}
+library(qdap)
+spelling_result<-check_spelling(mergedDF$JobTitle, range = 2, 
+  assume.first.correct = FALSE,
+  method = "jw", dictionary = qdapDictionaries::GradyAugmented,
+  parallel = TRUE, cores = parallel::detectCores()/2, n.suggests = 3)
+```
 
 
 
